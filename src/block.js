@@ -28,7 +28,7 @@ class Block {
     return `Block -
       Timestamp: ${this.timestamp}
       Data: ${this.data}
-      PreviousHash: ${this.previousHash}
+      PreviousHash: ${this.previousHasht }
       Hash: ${this.hash}`;
   }
 
