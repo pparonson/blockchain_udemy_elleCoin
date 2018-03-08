@@ -9,15 +9,17 @@ class Block {
 
   static genesis() {
     // return an instance of 'this' block class instance
-    return new this(Date.now(), {}, "", "g3n3515b10ckh45h")
+    return new this(Date.now(), {message: "genesis block"}, "0", "g3n3515b10ckh45h")
   }
 
-  static mineBlock(previousBlock, data) {
+  static mineBlock(data, previousBlock) {
     const timestamp = Date.now();
     const previousHash = previousBlock.hash;
+
+
     const hash = Block.calculateHash(timestamp, data, previousHash);
 
-    return new this(timestamp, data, previousHash, hash).toString();
+    return new this(timestamp, data, previousHash, hash);
   }
 
   static calculateHash(timestamp, data, previousHash) {
@@ -28,7 +30,7 @@ class Block {
     return `Block -
       Timestamp: ${this.timestamp}
       Data: ${this.data}
-      PreviousHash: ${this.previousHasht }
+      PreviousHash: ${this.previousHash }
       Hash: ${this.hash}`;
   }
 
