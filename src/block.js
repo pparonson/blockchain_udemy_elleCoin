@@ -1,30 +1,33 @@
 const SHA256 = require("crypto-js/sha256");
 
 module.exports = class Block {
-  constructor(timestamp, data, previousHash, hash) {
-    this.timestamp = timestamp;
+  constructor(data, previousHash) {
+    this.timestamp = Date.now();
     this.data = data;
     this.previousHash = previousHash;
-    this.hash = hash;
+    this.hash = Block.calculateHash(data, previousHash);
   }
 
   static genesis() {
     // return an instance of 'this' block class instance
-    return new this(Date.now(), {message: "genesis block"}, "0", "g3n3515b10ckh45h")
+    return new this({message: "genesis block"}, "0")
   }
 
   static mineBlock(data, previousBlock) {
-    const timestamp = Date.now();
+    // const timestamp = Date.now();
     const previousHash = previousBlock.hash;
+    //const hash = Block.calculateHash(data, previousHash);
 
-
-    const hash = Block.calculateHash(timestamp, data, previousHash);
-
-    return new this(timestamp, data, previousHash, hash);
+    return new this(data, previousHash);
   }
 
-  static calculateHash(timestamp, data, previousHash) {
-    return SHA256(`${timestamp}${data}${previousHash}`).toString()
+  static calculateHash(data, previousHash) {
+    return SHA256(`${data}${previousHash}`).toString()
+  }
+
+  static calcBlockHash(block) {
+    const {data, previousHash} = block;
+    return Block.calculateHash(data, previousHash);
   }
 
   toString() {
